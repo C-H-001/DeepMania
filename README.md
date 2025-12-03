@@ -1,80 +1,94 @@
+<div align="center">
+
+# DeepMania
+
+**[English](README.md) | [简体中文](README_zh.md)**
+
+</div>
+
+---
 # DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
 
-DeepMania 是一个基于 **Conditional Diffusion Model (条件扩散模型)** 的 Osu!Mania 4K 谱面自动生成器。
+DeepMania is an automatic Osu!Mania 4K beatmap generator based on a **Conditional Diffusion Model**.
 
-与传统的基于规则的生成器不同，DeepMania 学习了数千张 Ranked 谱面的分布，能够根据音频特征和目标星数（Star Rating）生成具有“人手感”的谱面。
+DeepMania has learned the distribution of thousands of Ranked beatmaps and can generate charts with a "human touch" based on audio Mel-spectrogram features and a target Star Rating (SR).
 
-## ✨ 核心特性
+## ✨ Key Features
 
-*   **多模态输入 (Multi-modal Input)**: 结合了 **Mel Spectrogram** (旋律/音色) 和 **Onset Envelope** (重音/节奏) 双通道输入，确保生成的 Note 紧贴音乐重音。
-*   **难度可控 (Difficulty Conditioning)**: 支持指定目标星数 (SR)，模型会根据 SR 调整生成的密度和 Pattern 复杂度（如低星出单点，高星出纵连/交互）。
-*   **高斯热力图预测 (Gaussian Heatmap)**: 摒弃了传统的二值化 Grid，使用高斯模糊后的概率图进行训练，解决了稀疏数据下的模式崩塌问题。
-*   **智能节奏量化 (Beat-wise Competition Quantization)**: 
-    *   引入了基于小节的节奏竞争算法。
-    *   模型会自动判断当前一拍是 **Straight (1/2, 1/4, 1/8)** 还是 **Swing (1/3, 1/6)**。
-    *   保证了局部节奏的一致性，消除了“杂乱无章”的 AI 生成感。
+*   **Multi-modal Input**: Combines **Mel Spectrogram** (melody/timbre) and **Onset Envelope** (rhythm/accents) as dual-channel inputs, ensuring generated notes align closely with musical accents.
+*   **Difficulty Conditioning**: Supports specifying a target Star Rating (SR). The model adjusts note density and pattern complexity (e.g., single notes for low SR, jump-trills/streams for high SR) based on the input SR.
+*   **Gaussian Heatmap**: Abandons traditional binary grids in favor of Gaussian-blurred probability maps during training, solving mode collapse issues often found in sparse data generation.
+*   **Smart Rhythm Quantization (Beat-wise Competition)**: 
+    *   Introduces a beat-wise rhythm competition algorithm.
+    *   The model automatically determines if the current beat follows a **Straight** rhythm (1/2, 1/4, 1/8) or a **Swing** rhythm (1/3, 1/6).
+    *   This ensures local rhythmic consistency and eliminates the "chaotic" feel often seen in AI generation.
 
-## 🛠️ 安装
+## 🛠️ Installation
 
-需要 Python 3.8+ 和 CUDA 环境（推荐）。
+Requires Python 3.8+ and a CUDA environment (Recommended).
 
 ```bash
 pip install -r requirements.txt
 ```
 
-*(requirements.txt 内容: torch, numpy, librosa, scipy, pandas, tqdm)*
+## 🚀 Usage (Inference)
 
-## 🚀 使用方法 (Inference)
+You need to prepare:
+1.  An audio file (`.mp3`).
+2.  Timing Point data for the audio (Copy this from the original `.osu` file or measure it yourself; the model currently does not accurately predict BPM/Offset).
+3.  Pre-trained model weights (`.pt`).
 
-你需要准备：
-1.  一个音频文件 (`.mp3`)。
-2.  该音频的 Timing Point 数据 (从原谱的 `.osu` 文件中复制，或者自己测定)。
-3.  预训练好的模型权重 (`.pt`)。
-
-### 命令行示例
+### CLI Example
 
 ```bash
 python inference.py \
   --audio "songs/freedom_dive.mp3" \
-  --model "checkpoints/model_epoch_50.pt" \
+  --model "checkpoints/best.pt" \
   --timing "243,266.666,4,2,1,60,1,0" \
   --sr 5.5 \
   --out "output_freedom_dive.osu"
 ```
 
-### 参数说明
+### Parameters
 
-*   `--audio`: MP3 文件路径。
-*   `--model`: 模型权重路径。
-*   `--timing`: Osu 格式的 Timing Point 字符串（红线）。格式为 `Offset,BeatLength,...`。这对于保证生成的谱面与音乐对齐至关重要。
-*   `--sr`: 目标星数。建议范围 2.0 - 6.0。
-*   `--threshold`: (可选) Note 判定阈值，默认 0.5。调低会增加 Note 数量，调高会更稀疏。
+*   `--audio`: Path to the input MP3 file.
+*   `--model`: Path to the model checkpoint.
+*   `--timing`: Osu-formatted Timing Point string (Red Line). Format: `Offset,BeatLength,...`. This is crucial for aligning the generated chart with the music.
+*   `--sr`: Target Star Rating. Recommended range: 2.0 - 6.0.
+*   `--threshold`: (Optional) Note detection threshold, default is 0.5. Lower values increase note count; higher values make it sparser.
 
-## 🧠 技术原理细节
+## 🧠 Technical Details
 
-### 1. 训练数据的构建
-我们将谱面转换为 `[Time, 4]` 的 Grid，并对时间轴应用高斯模糊（Sigma=1.0）。音频部分提取 Mel 谱图，并额外计算 Onset Strength 作为一个显式的 Channel 注入模型，使模型能够轻松捕捉到 Kick 和 Snare 的位置。
+### 1. Data Construction
+Beatmaps are converted into `[Time, 4]` grids with Gaussian blur applied along the time axis (Sigma=1.0). For audio, we extract Mel Spectrograms and additionally calculate **Onset Strength** as an explicit channel injection, allowing the model to easily capture note placements.
 
-### 2. 模型架构
-使用修改版的 1D U-Net。
-*   **Input**: Noisy Grid (4ch) + Mel (80ch) + Onset (1ch) = 85 Channels。
-*   **Conditioning**: Time Embedding + Star Rating Embedding (通过 FiLM 层注入)。
+### 2. Model Architecture
+Uses a modified 1D U-Net.
+*   **Input**: Noisy Grid (4ch) + Mel (80ch) + Onset (1ch) = 85 Channels.
+*   **Conditioning**: Time Embedding + Star Rating Embedding (injected via FiLM layers).
 
-### 3. 后处理：小节竞争算法 (Beat-wise Competition)
-AI 生成的时间是连续的浮点数。为了量化到 Osu 的整数网格，我们不简单地吸附到最近点。
-算法会分析每一拍内的所有 Note：
-*   假设它是直拍 (Straight)，计算总误差。
-*   假设它是三连音 (Swing)，计算总误差。
-*   **Winner Takes All**: 哪种假设误差更小，这一拍的所有 Note 就强制吸附到该节奏系下。这避免了 1/4 和 1/3 混杂出现的“鬼畜”节奏。
+### 3. Post-processing: Beat-wise Competition Algorithm
+The model generates continuous floating-point timestamps. To snap these to the Osu integer grid, we avoid simple nearest-neighbor snapping.
+The algorithm analyzes all notes within a single beat:
+*   Hypothesis A: It is a **Straight** beat (1/4, 1/8). Calculate total error.
+*   Hypothesis B: It is a **Swing** beat (1/3, 1/6). Calculate total error.
+*   **Winner Takes All**: All notes in that beat are forced to snap to the grid of the winning hypothesis. This prevents the chaotic mixture of 1/4 and 1/3 rhythms.
 
-## 📂 项目结构
+## 📂 Project Structure
 
-*   `inference.py`: 推理主程序，包含完整的后处理逻辑。
-*   `model.py`: PyTorch U-Net 模型定义。
-*   `dataset.py`: 数据加载与实时高斯模糊处理。
-*   `train.py`: 训练循环代码。
-*   `sr_calculator.py`: (辅助) 用于计算谱面难度的逻辑。
+*   `inference.py`: Main inference script including the full post-processing logic.
+*   `model.py`: PyTorch U-Net model definition.
+*   `dataset.py`: Data loading and real-time Gaussian blur processing.
+*   `train.py`: Training loop code.
+*   `sr_calculator.py`: (Helper) Logic for calculating beatmap difficulty.
 
 ## 📜 License
 
 MIT
+
+## 🤝 Acknowledgements
+
+Special thanks to the open-source community for their contributions:
+
+*   **[Star-Rating-Rebirth](https://github.com/sunnyxxy/Star-Rating-Rebirth)** by **[sunnyxxy](https://github.com/sunnyxxy)**:
+    The files `osu_file_parser.py` and `sr_calculator.py` in this project are forked and adapted from this repository. We rely on its accurate Strain System implementation to generate Star Rating labels for training our diffusion model.
