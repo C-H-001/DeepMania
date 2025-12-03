@@ -93,6 +93,18 @@ The algorithm analyzes all notes within a single beat:
 *   Hypothesis B: It is a **Swing** beat (1/3, 1/6). Calculate total error.
 *   **Winner Takes All**: All notes in that beat are forced to snap to the grid of the winning hypothesis. This prevents the chaotic mixture of 1/4 and 1/3 rhythms.
 
+### 4. Dynamic Rhythm Complexity
+To ensure playability and structural logic, the post-processing algorithm dynamically unlocks allowed rhythmic divisors based on the provided `target_sr` (Target Star Rating). This ensures that **low-star maps will not contain unreasonable high-speed streams.**
+
+The current threshold logic is as follows:
+
+| Rhythm Type | Base Divisors | Intermediate Unlock | Expert Unlock |
+| :--- | :--- | :--- | :--- |
+| **Straight** | 1/1, 1/2, 1/4 | **SR > 4.5**: Adds 1/8 (Stream) | **SR > 6.0**: Adds 1/16 (Dump/Tech) |
+| **Swing** | 1/1, 1/3 | **SR > 4.0**: Adds 1/6 (Fast Triplet) | **SR > 5.5**: Adds 1/12 (Hyper-fast Triplet) |
+
+*Example: If you generate a map with SR=3.5, the algorithm automatically disables complex rhythms like 1/6, 1/8, and 1/12, forcing notes to snap to simpler grids to ensure accessibility for beginners.*
+
 ## 📂 Project Structure
 
 *   `inference.py`: Main inference script including the full post-processing logic.

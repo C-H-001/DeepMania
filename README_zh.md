@@ -7,7 +7,8 @@
 
 </div>
 
-# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)(目前只有米，面之后会考虑)
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
+(目前只有米，面之后会考虑)
 
 DeepMania 是一个基于 **Conditional Diffusion Model (条件扩散模型)** 的 Osu!Mania 4K 谱面自动生成器。
 
@@ -91,6 +92,18 @@ AI 生成的时间是连续的浮点数。为了量化到 Osu 的整数网格，
 *   假设它是直拍 (Straight)，计算总误差。
 *   假设它是三连音 (Swing)，计算总误差。
 *   **Winner Takes All**: 哪种假设误差更小，这一拍的所有 Note 就强制吸附到该节奏系下。这避免了 1/4 和 1/3 混杂出现的“鬼畜”节奏。
+
+### 4. 动态节奏复杂度 (Dynamic Rhythm Complexity)
+为了保证谱面的合理性，后处理程序会根据用户输入的 `target_sr` (目标星数) 动态解锁允许的节拍细分。这意味着**低星图不会出现不合理的高速连打**。
+
+当前的阈值逻辑如下：
+
+| 节奏类型 | 基础节拍 | 中等难度解锁 | 高难度解锁 |
+| :--- | :--- | :--- | :--- |
+| **Straight (直拍)** | 1/1, 1/2, 1/4 | **SR > 4.5**: 允许 1/8 (Stream) | **SR > 6.0**: 允许 1/16 (Dump/Tech) |
+| **Swing (摇摆/三连)** | 1/1, 1/3 | **SR > 4.0**: 允许 1/6 (Fast Triplet) | **SR > 5.5**: 允许 1/12 (Hyper-fast Triplet) |
+
+*例如：如果您生成 SR=3.5 的谱面，算法将自动屏蔽 1/6, 1/8, 1/12 等复杂节奏，强制吸附到最简单的节拍上，以保证新手可玩性。*
 
 ## 📂 项目结构
 
