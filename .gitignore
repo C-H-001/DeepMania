@@ -22,3 +22,5 @@ checkpoints/
 # IDEs
 .vscode/
 .idea/
+
+check_sr.py
