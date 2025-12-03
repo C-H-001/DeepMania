@@ -109,4 +109,4 @@ Special thanks to the open-source community for their contributions:
 *   **[Star-Rating-Rebirth](https://github.com/sunnyxxy/Star-Rating-Rebirth)** by **[sunnyxxy](https://github.com/sunnyxxy)**:
     The files `osu_file_parser.py` and `sr_calculator.py` in this project are forked and adapted from this repository. We rely on its accurate Strain System implementation to generate Star Rating labels for training our diffusion model.
 
-###AND GEMINI3 PRO!!!!
+### AND GEMINI3 PRO!!!!
