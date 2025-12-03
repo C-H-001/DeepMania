@@ -107,4 +107,4 @@ MIT
 *   **[Star-Rating-Rebirth](https://github.com/sunnyxxy/Star-Rating-Rebirth)** (作者 **[sunnyxxy](https://github.com/sunnyxxy)**):
     本项目中的 `osu_file_parser.py` 和 `sr_calculator.py` 引用并修改自该仓库。我们使用其精确的 Strain 系统算法来为扩散模型计算训练数据的难度标签。
 
-###还有GEMINI3 Pro!!!!
+### 还有GEMINI3 Pro!!!!
