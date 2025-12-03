@@ -2,6 +2,7 @@
 
 # DeepMania
 ![Status](https://img.shields.io/badge/Status-Work_in_Progress-orange)
+
 **[English](README.md) | [简体中文](README_zh.md)**
 > This project is currently in **active development**.
 > 1. **Note Type**: The model currently supports **Rice (single notes) only**. Support for Long Notes (LNs) is under development.
