@@ -7,7 +7,7 @@
 </div>
 
 ---
-# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)（Only Rice）
 
 DeepMania is an automatic Osu!Mania 4K beatmap generator based on a **Conditional Diffusion Model**.
 
