@@ -13,6 +13,9 @@ DeepMania is an automatic Osu!Mania 4K beatmap generator based on a **Conditiona
 
 DeepMania has learned the distribution of thousands of Ranked beatmaps and can generate charts with a "human touch" based on audio Mel-spectrogram features and a target Star Rating (SR).
 
+<img width="2700" height="1500" alt="image" src="https://github.com/user-attachments/assets/e98a29ed-aa0f-4084-9e58-c5a26862abb4" />
+
+
 ## ✨ Key Features
 
 *   **Multi-modal Input**: Combines **Mel Spectrogram** (melody/timbre) and **Onset Envelope** (rhythm/accents) as dual-channel inputs, ensuring generated notes align closely with musical accents.
