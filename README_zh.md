@@ -6,11 +6,14 @@
 **[English](README.md) | [简体中文](README_zh.md)**
 
 </div>
-# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
+
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)(目前只有米，面之后会考虑)
 
 DeepMania 是一个基于 **Conditional Diffusion Model (条件扩散模型)** 的 Osu!Mania 4K 谱面自动生成器。
 
 DeepMania 学习了数千张 Ranked 谱面的分布，能够根据音频Mels谱特征和目标星数（Star Rating）生成具有“人手感”的谱面。
+
+<img width="2700" height="1500" alt="image" src="https://github.com/user-attachments/assets/fbe76104-53ba-4dbf-a3e7-a560c8a25d91" />
 
 ## ✨ 核心特性
 
@@ -106,3 +109,5 @@ MIT
 
 *   **[Star-Rating-Rebirth](https://github.com/sunnyxxy/Star-Rating-Rebirth)** (作者 **[sunnyxxy](https://github.com/sunnyxxy)**):
     本项目中的 `osu_file_parser.py` 和 `sr_calculator.py` 引用并修改自该仓库。我们使用其精确的 Strain 系统算法来为扩散模型计算训练数据的难度标签。
+
+### 还有GEMINI3 Pro!!!!

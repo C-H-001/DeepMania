@@ -7,11 +7,14 @@
 </div>
 
 ---
-# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)（Only Rice）
 
 DeepMania is an automatic Osu!Mania 4K beatmap generator based on a **Conditional Diffusion Model**.
 
 DeepMania has learned the distribution of thousands of Ranked beatmaps and can generate charts with a "human touch" based on audio Mel-spectrogram features and a target Star Rating (SR).
+
+<img width="2700" height="1500" alt="image" src="https://github.com/user-attachments/assets/e98a29ed-aa0f-4084-9e58-c5a26862abb4" />
+
 
 ## ✨ Key Features
 
@@ -108,3 +111,5 @@ Special thanks to the open-source community for their contributions:
 
 *   **[Star-Rating-Rebirth](https://github.com/sunnyxxy/Star-Rating-Rebirth)** by **[sunnyxxy](https://github.com/sunnyxxy)**:
     The files `osu_file_parser.py` and `sr_calculator.py` in this project are forked and adapted from this repository. We rely on its accurate Strain System implementation to generate Star Rating labels for training our diffusion model.
+
+### AND GEMINI3 PRO!!!!
