@@ -1,13 +1,23 @@
 <div align="center">
 
 # DeepMania
-
+![Status](https://img.shields.io/badge/Status-Work_in_Progress-orange)
 **[English](README.md) | [简体中文](README_zh.md)**
-
+> This project is currently in **active development**.
+> 1. **Note Type**: The model currently supports **Rice (single notes) only**. Support for Long Notes (LNs) is under development.
+> 2. **Difficulty Control**: The actual Star Rating (SR) of the generated map may deviate slightly from the target value.
+> 3. **Timing**: To ensure the best gameplay experience, please provide accurate **Timing Points** (BPM & Offset). Automatic detection is currently experimental and used for reference only.
+>
+> ---
+>
+> 本项目仍处于**开发阶段**。
+> 1. **Note 类型**: 目前模型仅生成 **Rice (单点)**，面条 (Long Notes) 功能开发中。
+> 2. **难度控制**: 输出的实际星数 (SR) 可能会在目标值上下浮动。
+> 3. **Timing**: 为了保证游玩体验，请务必提供准确的 **Timing Points** (BPM & Offset)，自动检测目前仅作辅助。
 </div>
 
 ---
-# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)（Only Rice）
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
 
 DeepMania is an automatic Osu!Mania 4K beatmap generator based on a **Conditional Diffusion Model**.
 
