@@ -30,6 +30,22 @@ Requires Python 3.8+ and a CUDA environment (Recommended).
 ```bash
 pip install -r requirements.txt
 ```
+## 📥 Model Weights
+
+To generate beatmaps, you need the pre-trained model weights (`best.pt`).
+You can download them from our Hugging Face repository:
+
+👉 **[Download on Hugging Face](https://huggingface.co/AzusawaKohane/DeepMania/tree/main)**
+
+**Setup:**
+1. Download the `.pt` file (e.g., `best.pt`).
+2. Create a folder named `checkpoints` in the root directory.
+3. Place the downloaded file into `checkpoints/`.
+
+```bash
+mkdir checkpoints
+# Move your downloaded best.pt here
+
 
 ## 🚀 Usage (Inference)
 
