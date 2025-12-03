@@ -180,32 +180,61 @@ def grid_to_hitobjects(grid, beat_len, offset, target_sr, threshold=0.5):
     return quantize_beat_wise(raw_notes, beat_len, offset, target_sr)
 
 def write_osu_file(output_path, audio_filename, hit_objects, sr_val, timing_str):
+    timing_str = timing_str.strip()
+    
     content = f"""osu file format v14
 
 [General]
 AudioFilename: {audio_filename}
+AudioLeadIn: 0
+PreviewTime: -1
+Countdown: 0
+SampleSet: Soft
+StackLeniency: 0.7
 Mode: 3
+LetterboxInBreaks: 0
+WidescreenStoryboard: 0
 
 [Metadata]
 Title: AI Generated
+TitleUnicode: AI Generated
 Artist: DeepMania
-Creator: DeepMania
+ArtistUnicode: DeepMania
+Creator: AI
 Version: {sr_val} Stars
+Source:
+Tags:
+BeatmapID: 0
+BeatmapSetID: 0
 
 [Difficulty]
+HPDrainRate: 8
 CircleSize: 4
 OverallDifficulty: 8
+ApproachRate: 5
+SliderMultiplier: 1.4
+SliderTickRate: 1
+
+[Events]
+//Background and Video events
+//Break Periods
+//Storyboard Layer 0 (Background)
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+//Storyboard Sound Samples
 
 [TimingPoints]
 {timing_str}
 
 [HitObjects]
-"""
-    content += "\n".join(hit_objects)
+""" 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"Saved to {output_path}")
-
+        for line in hit_objects:
+            f.write(line + "\n")
+            
+    print(f"Saved beatmap to {output_path}")
 # ================= 主入口 =================
 
 if __name__ == "__main__":

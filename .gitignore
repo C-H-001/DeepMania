@@ -24,3 +24,6 @@ checkpoints/
 .idea/
 
 check_sr.py
+plot.py
+
+*.mp3
