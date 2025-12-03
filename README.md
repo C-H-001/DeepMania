@@ -1,0 +1,80 @@
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
+
+DeepMania 是一个基于 **Conditional Diffusion Model (条件扩散模型)** 的 Osu!Mania 4K 谱面自动生成器。
+
+与传统的基于规则的生成器不同，DeepMania 学习了数千张 Ranked 谱面的分布，能够根据音频特征和目标星数（Star Rating）生成具有“人手感”的谱面。
+
+## ✨ 核心特性
+
+*   **多模态输入 (Multi-modal Input)**: 结合了 **Mel Spectrogram** (旋律/音色) 和 **Onset Envelope** (重音/节奏) 双通道输入，确保生成的 Note 紧贴音乐重音。
+*   **难度可控 (Difficulty Conditioning)**: 支持指定目标星数 (SR)，模型会根据 SR 调整生成的密度和 Pattern 复杂度（如低星出单点，高星出纵连/交互）。
+*   **高斯热力图预测 (Gaussian Heatmap)**: 摒弃了传统的二值化 Grid，使用高斯模糊后的概率图进行训练，解决了稀疏数据下的模式崩塌问题。
+*   **智能节奏量化 (Beat-wise Competition Quantization)**: 
+    *   引入了基于小节的节奏竞争算法。
+    *   模型会自动判断当前一拍是 **Straight (1/2, 1/4, 1/8)** 还是 **Swing (1/3, 1/6)**。
+    *   保证了局部节奏的一致性，消除了“杂乱无章”的 AI 生成感。
+
+## 🛠️ 安装
+
+需要 Python 3.8+ 和 CUDA 环境（推荐）。
+
+```bash
+pip install -r requirements.txt
+```
+
+*(requirements.txt 内容: torch, numpy, librosa, scipy, pandas, tqdm)*
+
+## 🚀 使用方法 (Inference)
+
+你需要准备：
+1.  一个音频文件 (`.mp3`)。
+2.  该音频的 Timing Point 数据 (从原谱的 `.osu` 文件中复制，或者自己测定)。
+3.  预训练好的模型权重 (`.pt`)。
+
+### 命令行示例
+
+```bash
+python inference.py \
+  --audio "songs/freedom_dive.mp3" \
+  --model "checkpoints/model_epoch_50.pt" \
+  --timing "243,266.666,4,2,1,60,1,0" \
+  --sr 5.5 \
+  --out "output_freedom_dive.osu"
+```
+
+### 参数说明
+
+*   `--audio`: MP3 文件路径。
+*   `--model`: 模型权重路径。
+*   `--timing`: Osu 格式的 Timing Point 字符串（红线）。格式为 `Offset,BeatLength,...`。这对于保证生成的谱面与音乐对齐至关重要。
+*   `--sr`: 目标星数。建议范围 2.0 - 6.0。
+*   `--threshold`: (可选) Note 判定阈值，默认 0.5。调低会增加 Note 数量，调高会更稀疏。
+
+## 🧠 技术原理细节
+
+### 1. 训练数据的构建
+我们将谱面转换为 `[Time, 4]` 的 Grid，并对时间轴应用高斯模糊（Sigma=1.0）。音频部分提取 Mel 谱图，并额外计算 Onset Strength 作为一个显式的 Channel 注入模型，使模型能够轻松捕捉到 Kick 和 Snare 的位置。
+
+### 2. 模型架构
+使用修改版的 1D U-Net。
+*   **Input**: Noisy Grid (4ch) + Mel (80ch) + Onset (1ch) = 85 Channels。
+*   **Conditioning**: Time Embedding + Star Rating Embedding (通过 FiLM 层注入)。
+
+### 3. 后处理：小节竞争算法 (Beat-wise Competition)
+AI 生成的时间是连续的浮点数。为了量化到 Osu 的整数网格，我们不简单地吸附到最近点。
+算法会分析每一拍内的所有 Note：
+*   假设它是直拍 (Straight)，计算总误差。
+*   假设它是三连音 (Swing)，计算总误差。
+*   **Winner Takes All**: 哪种假设误差更小，这一拍的所有 Note 就强制吸附到该节奏系下。这避免了 1/4 和 1/3 混杂出现的“鬼畜”节奏。
+
+## 📂 项目结构
+
+*   `inference.py`: 推理主程序，包含完整的后处理逻辑。
+*   `model.py`: PyTorch U-Net 模型定义。
+*   `dataset.py`: 数据加载与实时高斯模糊处理。
+*   `train.py`: 训练循环代码。
+*   `sr_calculator.py`: (辅助) 用于计算谱面难度的逻辑。
+
+## 📜 License
+
+MIT

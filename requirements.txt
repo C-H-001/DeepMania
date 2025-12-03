@@ -1,0 +1,6 @@
+echo "torch>=2.0.0
+numpy
+librosa
+scipy
+pandas
+tqdm" > requirements.txt

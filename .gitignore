@@ -1,0 +1,24 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dataset (Huge files)
+processed_dataset/
+*.npz
+
+# Model Checkpoints (Large files)
+checkpoints/
+*.pt
+*.pth
+
+# Generated files
+*.osu
+!output_example.osu 
+
+# OS files
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
