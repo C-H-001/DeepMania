@@ -7,7 +7,7 @@
 
 </div>
 
-# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)
+# DeepMania: Diffusion-Based Osu!Mania 4K Generator (v1.0)(目前只有米，面之后会考虑)
 
 DeepMania 是一个基于 **Conditional Diffusion Model (条件扩散模型)** 的 Osu!Mania 4K 谱面自动生成器。
 
