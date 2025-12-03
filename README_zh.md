@@ -3,6 +3,7 @@
 
 # DeepMania
 ![Status](https://img.shields.io/badge/Status-Work_in_Progress-orange)
+
 **[English](README.md) | [简体中文](README_zh.md)**
 
 > This project is currently in **active development**.
