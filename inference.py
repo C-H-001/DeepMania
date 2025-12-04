@@ -120,12 +120,12 @@ def get_best_snap(time_ms, offset, beat_len, divisors):
 def quantize_beat_wise(raw_notes, beat_len, offset, target_sr):
     # 节奏模型定义
     divisors_straight = [1, 2, 4]
-    if target_sr > 4.5: divisors_straight += [8]
+    if target_sr > 4.7: divisors_straight += [8]
     if target_sr > 6: divisors_straight += [16]
     
     divisors_swing = [1, 3]
-    if target_sr > 4: divisors_swing += [6]
-    if target_sr > 5.5: divisors_swing += [12]
+    if target_sr > 5: divisors_swing += [6]
+    if target_sr > 6.2: divisors_swing += [12]
     
     # 按拍分组
     beat_groups = {}

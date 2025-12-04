@@ -27,3 +27,6 @@ check_sr.py
 plot.py
 
 *.mp3
+
+debug.py
+test.png
