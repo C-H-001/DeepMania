@@ -80,6 +80,14 @@ class ManiaDataset(Dataset):
 
         # --- 2. Chart 处理 (保持高斯模糊逻辑) ---
         raw_chart = item['chart'].astype(np.float32)
+
+        SHIFT_FRAMES = 3  # 正数表示向右移，负数表示向左移
+        # 向右平移: 头部补0，尾部截断
+        shifted_chart = np.zeros_like(raw_chart)
+        shifted_chart[SHIFT_FRAMES:, :] = raw_chart[:-SHIFT_FRAMES, :]
+        raw_chart = shifted_chart
+            
+
         heatmap = np.zeros_like(raw_chart)
 
         for k in range(raw_chart.shape[1]):

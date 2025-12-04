@@ -13,7 +13,7 @@ from model import ManiaUNet
 # ================= 配置区域 =================
 DEVICE = "cuda:1" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 32 
-LR = 5e-5
+LR = 1e-4
 EPOCHS = 100
 TIMESTEPS = 1200
 DATA_DIR = "./processed_dataset" # 确保这里指向你新的数据集路径
