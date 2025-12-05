@@ -17,7 +17,7 @@
 DeepMania 是一个先进的 Osu!Mania 4K 谱面自动生成框架。不同于传统的规则生成器，它基于 **Conditional Diffusion Model (条件扩散模型)**，学习了数千张 Ranked 谱面的分布规律，能够根据音频特征和目标难度生成具有“人手感”的谱面。
 
 <img width="1500" height="1200" alt="image" src="https://github.com/user-attachments/assets/1f3d8bb2-bb67-42a5-8422-6eb152962529" />
-
+<div align="center">(Cyber Inductance -- IcyWorld)</div>
 
 ## ✨ 核心特性
 
