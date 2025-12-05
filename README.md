@@ -16,7 +16,8 @@
 
 DeepMania is an advanced framework for automatically generating Osu!Mania 4K beatmaps. Unlike traditional rule-based generators, DeepMania utilizes a **Conditional Diffusion Model** trained on thousands of Ranked maps. It learns to generate patterns that feel "human-made" based on audio features and a target difficulty (Star Rating).
 
-<img src="https://github.com/user-attachments/assets/fbe76104-53ba-4dbf-a3e7-a560c8a25d91" alt="DeepMania Demo" width="100%">
+<img width="1500" height="1200" alt="image" src="https://github.com/user-attachments/assets/ddc6a755-0c5f-4d9f-8c23-db6cab1df38c" />
+
 
 ## ✨ Key Features
 
