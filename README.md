@@ -19,6 +19,9 @@ DeepMania is an advanced framework for automatically generating Osu!Mania 4K bea
 <img width="1500" height="1200" alt="image" src="https://github.com/user-attachments/assets/ddc6a755-0c5f-4d9f-8c23-db6cab1df38c" />
 <div align="center">(Cyber Inductance -- IcyWorld)</div>
 
+## 🎵 Download Example
+[DeepMania - AI Generated.osz](https://cdn.jsdelivr.net/gh/C-H-001/DeepMania@main/Examples/DeepMania%20-%20AI%20Generated.osz)
+
 ## ✨ Key Features
 
 *   **81-Channel Explicit Feature Injection**: Combines **Mel Spectrogram** (Melody/Timbre, 80ch) and **Onset Envelope** (Rhythm/Impact, 1ch) as inputs. The model doesn't just "guess" the beat; it explicitly "sees" the impacts, resulting in high timing precision.
