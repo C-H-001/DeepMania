@@ -20,7 +20,7 @@ DeepMania 是一个先进的 Osu!Mania 4K 谱面自动生成框架。不同于�
 <div align="center">(Cyber Inductance -- IcyWorld)</div>
 
 ## 🎵 下载谱面
-[DeepMania - AI Generated.osz](https://raw.githubusercontent.com/C-H-001/DeepMania/main/Examples/DeepMania%20-%20AI%20Generated.osz)
+[DeepMania - AI Generated.osz](https://cdn.jsdelivr.net/gh/C-H-001/DeepMania@main/Examples/DeepMania%20-%20AI%20Generated.osz)
 
 ## ✨ 核心特性
 
