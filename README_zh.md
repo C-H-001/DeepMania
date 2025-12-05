@@ -19,6 +19,8 @@ DeepMania 是一个先进的 Osu!Mania 4K 谱面自动生成框架。不同于�
 <img width="1500" height="1200" alt="image" src="https://github.com/user-attachments/assets/1f3d8bb2-bb67-42a5-8422-6eb152962529" />
 <div align="center">(Cyber Inductance -- IcyWorld)</div>
 
+[📥 下载示例谱面文件]([https://github.com/你的用户名/仓库名/raw/main/文件路径/文件名.pdf](https://raw.githubusercontent.com/C-H-001/DeepMania/refs/heads/main/Examples/DeepMania%20-%20AI%20Generated.osz))
+
 ## ✨ 核心特性
 
 *   **81通道显式特征注入**: 结合了 **Mel Spectrogram** (旋律/音色, 80ch) 和 **Onset Envelope** (重音/节奏, 1ch) 作为输入。模型不再需要“猜”哪里有鼓点，而是直接“看”到重音，实现了极高的时间对齐精度。
